@@ -29,3 +29,5 @@ func main() {
 
 	fmt.Printf("File content: %s\n", string(content[:n]))
 }
+
+// check
