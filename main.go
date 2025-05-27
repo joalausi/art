@@ -1,33 +1,47 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"log"
 	"os"
+	// "art/decoder"
+	// "art/encoder"
 )
 
 func main() {
-	// Check if the file exists
-	filePath := "example.txt"
-	if _, err := os.Stat(filePath); os.IsNotExist(err) {
-		log.Fatalf("File does not exist: %s", filePath)
+	// флаги
+	encodeMode := flag.Bool("e", false, "encode mode")
+	multiline := flag.Bool("m", false, "multiline mode")
+	flag.Parse()
+
+	args := flag.Args()
+	if len(args) == 0 {
+		fmt.Println("Error")
+		os.Exit(1)
 	}
 
-	// Open the file
-	file, err := os.Open(filePath)
+	var input string
+	if *multiline {
+		data, err := os.ReadFile(args[0])
+		if err != nil {
+			fmt.Println("Error")
+			os.Exit(1)
+		}
+		input = string(data)
+	} else {
+		input = args[0]
+	}
+
+	var out string
+	var err error
+	if *encodeMode {
+		out = encoder.Encode(input)
+	} else {
+		out, err = decoder.Decode(input)
+	}
 	if err != nil {
-		log.Fatalf("Failed to open file: %s", err)
+		fmt.Println("Error")
+		os.Exit(1)
 	}
-	defer file.Close()
-
-	// Read the file content
-	content := make([]byte, 1024)
-	n, err := file.Read(content)
-	if err != nil {
-		log.Fatalf("Failed to read file: %s", err)
-	}
-
-	fmt.Printf("File content: %s\n", string(content[:n]))
+	fmt.Print(out)
 }
-
-// check
