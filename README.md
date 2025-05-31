@@ -14,12 +14,14 @@ art/
 │ └── utils.go
 └── test-data/ # Sample text files for testing
 
-## Usage 
+## Usage
 
-download and build the project 
+I recommed building the program to a binary with `go build -o art`. From now on `./art` can be considered equal to `go run .`
 
-cd art
-go build -o art
+- Decode the cats art: `./art -i examples/cats.encoded.txt`
+- Encode the doomer art: `./art -encode -i examples/doomer.art.txt`
+- Decode the plane art and write output to a file: `./art -i examples/plane.encoded.txt -i output.txt`
+- Encode the globe art, write output to a file and also display the result in the command line: `./art -encode -showout -i examples/globe.art.txt -o output.txt`
 
 ## flags
 
