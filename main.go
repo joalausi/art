@@ -1,12 +1,14 @@
 package main
 
 import (
-	"art/decoder"
-	"art/encoder"
-	"art/utils"
+	"flag"
 	"fmt"
 	"os"
 	"strings"
+
+	"./decoder"
+	"./encoder"
+	"./utils"
 )
 
 func main() {
@@ -15,6 +17,8 @@ func main() {
 		fmt.Println("Error")
 		return
 	}
+
+	flag.Parse()
 
 	encodeMode := false
 	multiline := false
