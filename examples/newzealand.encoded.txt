@@ -1,0 +1,31 @@
+New Zealand
+North Island New Zealand:
+[8   ]-[34  ]0 = Wellington
+[8   ]\ \[32  ]1 = Paraparaumu
+[8   ]/    \[29  ]2 = Palmerston North
+[17  ]\    \[28  ]3 = Hastings / Napier
+[9   ]\    \[31  ](twin cities)
+[19  ]\   /[27  ]4 = Wairoa
+[20  ]`  \[27  ]5 = Gisborne
+[21  ]D E[27  ]6 = Te Karaka
+[21  ]|   \[25  ]7 = Whakatane
+[21  ]|     \  ||[19  ]8 = Murupara
+[21  ]|[6  ]| ||[19  ]9 = Rotorua
+[21  ]|  C B     \[9   ]A = Tokoroa
+[20  ]/[13  ]\[8   ]B = Morrinsville
+[20  ]|[15  ]\    ---\[6  ]C = Hamilton
+[19  ]/[7  ]A     9  7 -/     |     D = Auckland
+[9   ]-[15  ]8     6   /[6  ]E = Devonport
+[8   ]/[25  ]/
+[6   ]/[27  ]5|
+[11  ]|[29  ]|    
+[6   ]\ -[21  ]4/ - -    
+[8   ]\[17  ]|[11  ]
+[9   ]\[8   ]\ [9  ]
+[19  ]\[7   ]3/[9  ] 
+[20  ]|  2[8  ]/[13  ]
+[19  ]/[9  ] /[15  ]
+[9   ]/[8  ]/[9   ]
+[9   ]|[6  ]/[20  ]
+[9   ]|1   /[22  ]
+[9   ]\0 /
