@@ -54,3 +54,11 @@ func DecodeMultiLine(input string) (string, error) {
 	}
 	return strings.Join(result, "\n"), nil
 }
+
+// Decode is a thin wrapper around DecodeSingleLine. It exists so the
+// ProcessData helper can use a common function name for both encoding and
+// decoding. The current CLI processes one line at a time, so this helper simply
+// delegates to DecodeSingleLine.
+func Decode(input string) (string, error) {
+	return DecodeSingleLine(input)
+}

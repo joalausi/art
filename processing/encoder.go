@@ -63,3 +63,9 @@ func EncodeMultiLine(input string) string {
 
 	return strings.Join(result, "\n")
 }
+
+// Encode is a convenience wrapper used by the ProcessData function. It simply
+// calls EncodeSingleLine as the CLI handles multi-line input on its own.
+func Encode(input string) string {
+	return EncodeSingleLine(input)
+}
