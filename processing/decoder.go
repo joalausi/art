@@ -1,4 +1,4 @@
-package decoder
+package processing
 
 import (
 	"errors"
