@@ -7,55 +7,56 @@ import (
 	"strings"
 )
 
-// Фрагмент: либо литерал, либо [N STR]
+// either literal or [N STR]
 type Token struct {
 	Repeat int
 	Text   string
 }
 
-// Разбирает строку на токены или возвращает ошибку
+// Parses a string into tokens or returns an error
 func Parse(input string) ([]Token, error) {
-	// регулярка на [число пробел что угодно кроме ]]
+	// regexp for matching [N STR] patterns
+	// where N is a number and STR is any non-empty string
 	re := regexp.MustCompile(`\[(\d+)\s([^\]]+)\]`)
 	tokens := []Token{}
 	lastIndex := 0
 
 	for _, match := range re.FindAllStringSubmatchIndex(input, -1) {
 		start, end := match[0], match[1]
-		// добавляем всё до [
+		// add everything before [
 		if start > lastIndex {
 			tokens = append(tokens, Token{Repeat: 1, Text: input[lastIndex:start]})
 		}
-		// парсим число и строку
+		// parse number and string
 		num, err := strconv.Atoi(input[match[2]:match[3]])
 		if err != nil {
-			return nil, fmt.Errorf("не число: %w", err)
+			return nil, fmt.Errorf("not a number: %w", err)
 		}
 		str := input[match[4]:match[5]]
 		if len(str) == 0 {
-			return nil, fmt.Errorf("пустая строка в скобках")
+			return nil, fmt.Errorf("empty line in brackets")
 		}
 		tokens = append(tokens, Token{Repeat: num, Text: str})
 		lastIndex = end
 	}
-	// остаток после последнего
+
 	if lastIndex < len(input) {
 		tokens = append(tokens, Token{Repeat: 1, Text: input[lastIndex:]})
 	}
-	// проверка наличия одиночных скобок и общего баланса
+	// check for single parentheses and overall balance
 	for _, t := range tokens {
 		if t.Repeat == 1 && (strings.Contains(t.Text, "[") || strings.Contains(t.Text, "]")) {
-			return nil, fmt.Errorf("несбалансированные скобки")
+			return nil, fmt.Errorf("unbalanced brackets in token: %s", t.Text)
 		}
 	}
 	if strings.Count(input, "[") != strings.Count(input, "]") {
-		return nil, fmt.Errorf("несбалансированные скобки")
+		return nil, fmt.Errorf("unbalanced brackets in input")
 	}
 
 	return tokens, nil
 }
 
-// ParseMultiLine разбивает вход на строки и парсит каждую отдельно.
+// ParseMultiLine splits the input into lines and parses each one separately.
 func ParseMultiLine(input string) ([][]Token, error) {
 	lines := strings.Split(strings.TrimRight(input, "\n"), "\n")
 	result := make([][]Token, 0, len(lines))
