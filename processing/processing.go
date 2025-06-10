@@ -4,7 +4,7 @@ import (
 	"sync"
 )
 
-// ProcessData параллельно обрабатывает каждую строку: декодирует или кодирует.
+// ProcessData processes each line in parallel: decodes or encodes.
 func ProcessData(lines []string, encode bool) []string {
 	result := make([]string, len(lines))
 	var wg sync.WaitGroup

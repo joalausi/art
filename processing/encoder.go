@@ -15,7 +15,7 @@ func encodeLine(line string) string {
 	n := len(line)
 
 	for i < n {
-		maxPatLen := 3 // You can tweak this (2 or 3)
+		maxPatLen := 3 // can tweak this (2 or 3)
 		found := false
 
 		// Try to match patterns of length 3, 2, 1 (in that order)
