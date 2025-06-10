@@ -1,43 +1,59 @@
-# Art Encoder and Decoder
+# Art Encoder/Decoder
 
-A simple CLI tool to encode and decode art and test files.
+Этот репозиторий содержит простую утилиту командной строки на Go для кодирования и декодирования текстовых файлов. Формат кодирования использует конструкции вида `[N STR]`, означающие повтор строки `STR` `N` раз. В каталоге `examples` расположены исходные и закодированные файлы с ASCII‑графикой, на которых можно опробовать работу программы.
 
-## Project Structure 
+## Сборка
 
-art/
-├── main.go # CLI entry point
-├── decoder/ # Decoder package
-│ └── decoder.go
-├── encoder/ # Encoder package
-│ └── encoder.go
-├── utils/ # Utility functions (e.g. file reading)
-│ └── utils.go
-└── test-data/ # Sample text files for testing
+Для получения исполняемого файла выполните:
 
-## Usage
+```bash
+go build -o art
+```
 
-I recommed building the program to a binary with `go build -o art`. From now on `./art` can be considered equal to `go run .`
+Также утилиту можно запускать напрямую через `go run .`.
 
-- Decode the cats art: `./art -i examples/cats.encoded.txt`
-- Encode the doomer art: `./art -encode -i examples/doomer.art.txt`
-- Decode the plane art and write output to a file: `./art -i examples/plane.encoded.txt -i output.txt`
-- Encode the globe art, write output to a file and also display the result in the command line: `./art -encode -showout -i examples/globe.art.txt -o output.txt`
+## Использование
 
-## flags
+```
+./art [опции] [строки...]
+```
 
--e encoder mode on
--m multiline mode on
+Если указан флаг `-i`, вход читается из файла. Без него аргументы командной строки считаются входными строками. Режим по умолчанию — декодирование.
 
-## Example
+### Основные флаги
 
-go run . -m "lion.encoded.txt"
-go run . -e -m "lion.art.txt"
+- `-encode` — переключить программу в режим кодирования.
+- `-multi`  — трактовать все переданные аргументы как отдельные строки (многострочный режим).
+- `-i FILE` — путь к входному файлу.
+- `-o FILE` — путь к файлу вывода.
+- `-showout` — печатать результат в терминал даже при использовании `-o`.
 
+## Примеры
 
-## Extras
- It features a multi-line decoder.
- It can encode text-based art.
- It can encode multi-line text-based art.
+Декодирование файла:
 
+```bash
+./art -i examples/cats.encoded.txt
+```
 
-Individual testing has completed all the test's in the project by me.
+Кодирование и сохранение результата:
+
+```bash
+./art -encode -i examples/alpha.art.txt -o alpha.txt
+```
+
+Многострочный ввод из аргументов:
+
+```bash
+./art -encode -multi "AAA" "BBB"
+```
+
+## Структура проекта
+
+- `main.go` — входная точка CLI.
+- `processing/` — пакет с логикой кодирования, декодирования и парсинга.
+- `examples/` — коллекция тестовых файлов для демонстрации возможностей.
+
+## Лицензия
+
+Код распространяется на условиях MIT License.
