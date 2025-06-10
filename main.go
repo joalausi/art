@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	// --- CLI флаги ---
+	// CLI flags
 	encodePtr := flag.Bool("encode", false, "Switch to encoding mode.")
 	showoutPtr := flag.Bool("showout", false, "Show output even if -o is defined.")
 	multiPtr := flag.Bool("multi", false, "Enable multi-line input in the command line.")
@@ -18,7 +18,7 @@ func main() {
 	outfilePtr := flag.String("o", "", "Specify output file to write output to.")
 	flag.Parse()
 
-	// --- Сбор входа ---
+	// Input Collection
 	var inputLines []string
 	if *infilePtr != "" {
 		lines, err := ReadLines(*infilePtr)
@@ -38,10 +38,10 @@ func main() {
 		}
 	}
 
-	// --- Обработка (decode/encode) с поддержкой concurrency ---
+	// Processing (decode/encode) with concurrency support
 	resultLines := processing.ProcessData(inputLines, *encodePtr)
 
-	// --- Вывод ---
+	// Output Handling
 	if *showoutPtr || *outfilePtr == "" {
 		for _, line := range resultLines {
 			fmt.Println(line)
@@ -54,7 +54,7 @@ func main() {
 	}
 }
 
-// ReadLines читает все строки из файла в срез строк.
+// ReadLines read all lines from a file and returns them as a slice of strings.
 func ReadLines(path string) ([]string, error) {
 	f, err := os.Open(path)
 	if err != nil {
@@ -70,7 +70,7 @@ func ReadLines(path string) ([]string, error) {
 	return lines, scanner.Err()
 }
 
-// WriteLines записывает все строки в файл (по одной на строку).
+// WriteLines writes a slice of strings to a file, one per line
 func WriteLines(path string, lines []string) error {
 	f, err := os.Create(path)
 	if err != nil {
