@@ -4,11 +4,6 @@ This is a command-line utility written in Go for encoding and decoding text file
 
 ## Installation
 
-```bash
-git clone https://gitea.koodsisu.fi/artemchornonoh1/art.git
-cd ~/art
-```
-
 ## Build
 
 To build the executable, run:

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="styles/mainpage.css">
+</head>
+
+<body>
+
+    <h1>Art Decoder</h1>
+
+    <div class="options">
+        <form name="input_form" id="input_form" action="decoder" method="POST" target="_self"></form>
+        <div class="radio">
+            <input form="input_form" type="radio" id="decode" name="setting" value="decode"{{if not .Setting}}checked="checked"{{end}} required>
+            <label for="decode" class="radio-label">Decode</label>
+            <input form="input_form" type="radio" id="encode" name="setting" value="encode"{{if .Setting}}checked="checked"{{end}}>
+            <label for="encode" class="radio-label">Encode</label>
+        </div>
+    </div>
+
+    <div class="art-areas">
+        <textarea name="input_data" form="input_form" placeholder="Enter input here...">{{printf "%s" .InputData}}</textarea>
+        <input class="button" form="input_form" type="submit" value="Submit">
+        <textarea name="output_data" placeholder="Output will be displayed here..." readonly>{{printf "%s" .OutputData}}</textarea>
+    </div>
+
+</body>    
+
+</html>
