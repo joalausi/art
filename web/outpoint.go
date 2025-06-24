@@ -5,7 +5,6 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"strings"
 )
 
 func renderPage(w http.ResponseWriter, page *Page) {
@@ -27,9 +26,8 @@ func getRoot(w http.ResponseWriter, r *http.Request) {
 
 	artPage := &Page{}
 
-	renderPage(w, artPage)
-
 	w.WriteHeader(http.StatusOK)
+	renderPage(w, artPage)
 }
 
 func postDecoder(w http.ResponseWriter, r *http.Request) {
@@ -50,7 +48,7 @@ func postDecoder(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Received setting %s", r.FormValue("setting"))
 	log.Printf("Received data:\n%s", r.FormValue("input_data"))
 
-	inputData := strings.Split(r.FormValue("input_data"), "\n")
+	input := r.FormValue("input_data")
 	setting := r.FormValue("setting")
 
 	encode := false
@@ -58,17 +56,30 @@ func postDecoder(w http.ResponseWriter, r *http.Request) {
 		encode = true
 	}
 
-	outputData := processing.ProcessData(&inputData, encode)
+	var (
+		output    string
+		decodeErr error
+	)
 
-	log.Printf("Created output:\n%s", strings.Join(outputData, "\n"))
+	if encode {
+		output = processing.EncodeMultiLine(input)
+	} else {
+		output, decodeErr = processing.DecodeMultiLine(input)
+	}
+
+	if decodeErr != nil {
+		http.Error(w, "Invalid encoded string", http.StatusBadRequest)
+		return
+	}
+
+	log.Printf("Created output:\n%s", output)
 
 	artPage := &Page{
 		Setting:    encode,
-		InputData:  []byte(r.FormValue("input_data")),
-		OutputData: []byte(strings.Join(outputData, "\n")),
+		InputData:  []byte(input),
+		OutputData: []byte(output),
 	}
 
-	renderPage(w, artPage)
-
 	w.WriteHeader(http.StatusAccepted)
+	renderPage(w, artPage)
 }
