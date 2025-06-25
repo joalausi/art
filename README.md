@@ -7,7 +7,7 @@ original and encoded ASCII-art files to try out the program.
 
 ## Installation
 
-## Build
+## Build Terminal
 
 To build the executable, run:
 
