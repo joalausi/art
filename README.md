@@ -7,6 +7,11 @@ original and encoded ASCII-art files to try out the program.
 
 ## Installation
 
+```bash
+git clone https://gitea.kood.tech/artemchornonoh1/art.git
+cd ~/art
+```
+
 ## Build Terminal
 
 To build the executable, run:
