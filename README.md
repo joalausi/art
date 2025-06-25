@@ -21,6 +21,26 @@ You can also run the tool directly with:
 go run .
 ```
 
+## Running the Web Interface
+
+The repository also includes a small HTTP server that hosts a web page for
+encoding and decoding art.
+
+```bash
+# build the server
+go build -o art-server server_main.go
+```
+Start with: `./art-server`
+
+```bash
+# or run it directly
+go run server_main.go
+```
+
+Navigate to http://localhost:22459 in your browser to use the interface. Use
+the radio buttons to switch between decoding and encoding modes and submit your
+text using the form.
+
 ## Usage
 
 ```
@@ -73,23 +93,6 @@ art/
     ├── encoder.go
     └── processing.go
 ```
-
-## Running the Web Interface
-
-The repository also includes a small HTTP server that hosts a web page for
-encoding and decoding art.
-
-```bash
-# build the server
-go build -o art-server server_main.go
-
-# or run it directly
-go run server_main.go
-```
-
-Navigate to `http://localhost:22459/` in your browser to use the interface. Use
-the radio buttons to switch between decoding and encoding modes and submit your
-text using the form.
 
 ## Contact
 
