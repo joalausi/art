@@ -3,8 +3,10 @@ package web
 import (
 	"art/processing"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func renderPage(w http.ResponseWriter, page *Page) {
@@ -38,18 +40,33 @@ func postDecoder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := r.ParseForm()
-	if err != nil {
-		http.Error(w, "Failed to parse form data", http.StatusBadRequest)
-		log.Printf("Error parsing form data: %s", err.Error())
-		return
+	contentType := r.Header.Get("Content-Type")
+
+	var input string
+	var setting string
+
+	if strings.HasPrefix(contentType, "text/plain") {
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			http.Error(w, "Failed to read request body", http.StatusBadRequest)
+			return
+		}
+		input = string(body)
+		setting = r.URL.Query().Get("setting")
+	} else {
+		err := r.ParseForm()
+		if err != nil {
+			http.Error(w, "Failed to parse form data", http.StatusBadRequest)
+			log.Printf("Error parsing form data: %s", err.Error())
+			return
+		}
+
+		input = r.FormValue("input_data")
+		setting = r.FormValue("setting")
 	}
 
-	log.Printf("Received setting %s", r.FormValue("setting"))
-	log.Printf("Received data:\n%s", r.FormValue("input_data"))
-
-	input := r.FormValue("input_data")
-	setting := r.FormValue("setting")
+	log.Printf("Received setting %s", setting)
+	log.Printf("Received data:\n%s", input)
 
 	encode := false
 	if setting == "encode" {
